@@ -13,12 +13,17 @@ function createObj1(store1){
     return result
 }
 
-function createObj1-2(store1){
+function createObj1_2(store1){
     let result = {}
     for (let keys in store1){
+        let day = store1[keys]
         result[keys] = {}
-        result[keys][store1[keys][0]]
+        for(let i = 0; i < day.length; i++){
+            result[keys][store1[keys][i][0]] = store1[keys][i][1] * store1[keys][i][2]
+        }
+        
     }
+    return result;
 }
 
 function createObj2(store2){
@@ -32,6 +37,23 @@ function createObj2(store2){
     }
     return result
 }
+
+function createObj2_2(store2){
+    let result = {}
+    for (let keys in store2['sale dates']){
+          let dates = store2['sale dates'][keys]
+          for (let i = 0; i < dates.length; i++){
+            if (!result[dates[i]]){
+                result[dates[i]] = {} 
+            }
+            else if(!result[dates[i]][keys]){
+              result[dates[i]][keys] = (dates.length * store2['inventory prices'][keys]).toFixed(2) 
+            }
+        }
+    }
+    return result
+}
+
 
 function createObj3(store3){
     let result = {}
@@ -53,8 +75,22 @@ function createObj3(store3){
     return result
 }
 
+function createObj3_2(store3){
+    let result = {}
+    for(let i = 0; i < store3.length; i++){
+        let info = store3[i]
+        if(!result[info.date]){
+            result[info.date] = {}
+        }
+        for(let keys in info['inventory sold']){
+            result[info.date][keys] = (info['inventory sold'][keys].cost * info['inventory sold'][keys].quantity).toFixed(2)
+        }
+    }
 
-function obj4(store4) {
+    return result
+}
+
+function createObj4(store4) {
     let result = {}
   for (let keys in store4){
       result[keys] = {}
@@ -62,4 +98,18 @@ function obj4(store4) {
       result[keys].quantity = store4[keys]['sold on'].length
   }
   return result
+}
+
+function createObj4_2(store4){
+    let result = {}
+    for (let keys in store4){
+      console.log(store4[keys]['sold on'])
+        for(let i = 0; i < store4[keys]['sold on'].length; i++){
+            if(!result[store4[keys]['sold on'][i]]){
+                result[store4[keys]['sold on'][i]] = {}
+            }
+            result[store4[keys]['sold on'][i]][keys] = (store4[keys]['sold on'].length * store4[keys].cost).toFixed(2)
+        }
+    }
+    return result
 }
